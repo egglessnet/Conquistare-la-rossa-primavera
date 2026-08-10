@@ -1,0 +1,65 @@
+title: the Allies are here!
+on-arrival: allied_strength += 160; allied_militancy += 2.4
+max-visits: 1
+view-if: year == 1943 and month == 10
+
+We have recieved news that Allied forces have landed on Sicily. This is obviously good news, but Italy is still far from free. How do we respond?
+
+- @militarise
+- @expand
+- @raid
+- @outreach
+- @turncoat
+- @nothing
+
+@militarise
+title: Militarise
+subtitle: Ramp up training to achieve parity with the arriving forces.
+unavailable-subtitle: We cannot afford to do this.
+choose-if: resources >= 1
+on-arrival: partisans_militancy += 0.5*(1-dissent); resources -= 1
+  
+@expand
+title: Expand
+subtitle: Expand our forces to aid the Allies.
+unavailable-subtitle: We cannot afford to do this.
+choose-if: resources >= 1
+on-arrival: partisans_strength += 50*(1-dissent); partisans_militancy += 0.1*(1-dissent); resources -=1
+  
+@raid
+title: Attack
+subtitle: Raid the fascists whilst they are distracted!
+unavailable-subtitle: We aren't ready to fight.
+choose-if: combat_resources >= 1
+on-arrival: {
+  Q.combat_resouces += math.round(fascist_militancy*(1-dissent))-1
+  Q.fascist_militancy -= 1-dissent
+}
+
+@outreach
+title: Reach out
+subtitle: Reach out to the Allies to secure ammunition, weapons, provisions, etc.
+unavailable-subtitle: We cannot afford to do this.
+choose-if: resources >= 1
+on-arrival: {
+  Q.allied_contact = 1
+  Q.allied_relation += 5;
+  Q.combat_resources += math.round(allied_relation*(1-dissent))
+  Q.resources -= 1
+}
+  
+@turncoat
+title: Do not let the fatherland fall!
+subtitle: This is madness.
+view-if: allied_relation < 40
+on-arrival: {
+  Q.left_dissent *= 20
+  Q.center_dissent *= 20
+  Q.reformist_dissent *= 10
+  Q.fascist_relation += 10
+  Q.allied_relation -= 100
+  Q.fascist = 1
+}
+  
+@nothing
+title: Let the Allies do their thing, they'll be fine.
