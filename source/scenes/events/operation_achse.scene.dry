@@ -1,0 +1,11 @@
+title: L'invasor
+subtitle: Germany has invaded.
+on-arrival: {
+  german_strength += 289
+  german_militancy += 18
+  fascist_strength -= 1031
+  fascist_militancy -= 18
+  if (fascism = 1){
+    german_relation -= 10
+  }
+}
