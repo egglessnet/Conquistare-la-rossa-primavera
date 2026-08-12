@@ -1,6 +1,6 @@
 
 (..0) No relation
-(0.1..14.9) hostile
+(0..14.9) hostile
 (14.9..29.9) cold
 (29.9..39.9) cool
 (39.9..54.9) neutral
